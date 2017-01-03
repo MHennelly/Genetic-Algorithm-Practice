@@ -1,9 +1,11 @@
 import random
+import sys
 
 class Gene:
-    def __init__(self, code):
+    def __init__(self, code, goal):
         self.code = code
         self.cost = 9999
+        self.goal = goal
 
     def code(self):
         self.code = ''
@@ -22,12 +24,12 @@ class Gene:
     def mate_one(self, gene):
         pivot = round(len(self.code)/2,0) - 1
         child1 = self.code[0:int(pivot)] + gene.code[int(pivot):]
-        return Gene(child1)
+        return Gene(child1, self.goal)
 
     def mate_two(self, gene):
         pivot = round(len(self.code)/2,0) - 1
         child2 = gene.code[0:int(pivot)] + self.code[int(pivot):]
-        return Gene(child2)
+        return Gene(child2, self.goal)
 
     def mutate(self, chance):
         if chance > random.uniform(0,1):
@@ -45,8 +47,6 @@ class Gene:
                 mutation += str(s[i])
             self.code = mutation
 
-
-
 def sort_pop(self, member):
     return member.cost
 
@@ -57,10 +57,12 @@ class Population:
         self.generationNumber = 0
         self.generations = generations
         while (size > 0):
-            gene = Gene('')
+            gene = Gene('', goal)
             gene.rand(len(self.goal))
             self.members.append(gene)
             size -= 1
+
+
 
     def generation(self):
         while(self.generationNumber < self.generations):
@@ -69,12 +71,12 @@ class Population:
 
             for i in range(0,len(self.members)):
                 self.members[i].calcCost(self.goal)
-                print (self.members[i].code)
 
             self.members.sort(key =lambda gene: gene.cost)
 
-            for i in range(0,len(self.members)):
-                print (self.members[i].cost)
+            for i in range(0,2):
+                print (self.members[i].code)
+                print ('Cost: ' + str(self.members[i].cost))
 
             child1 = self.members[0].mate_one(self.members[1])
             child2 = self.members[0].mate_two(self.members[1])
@@ -86,11 +88,16 @@ class Population:
                 self.members[i] = child2
 
             for i in range(0, len(self.members)):
-                self.members[i].mutate(0.5)
+                self.members[i].mutate(.99)
                 self.members[i].calcCost(self.goal)
                 if (self.members[i].code == self.goal):
-                    print(self.members[i])
-                    return True
+                    print('Generation: ' + str(self.generationNumber))
+                    print(self.members[i].code)
+                    print('Cost: ' + str(self.members[i].cost))
+                    print('Goal: ' + "'" + str(self.members[i].code) + "'" + ' achieved')
+                    sys.exit()
 
-population = Population("Hello, world!",100, 10000)
+print('Welcome!')
+goal = input('Please enter a phrase:')
+population = Population(goal,100,10000)
 population.generation()
