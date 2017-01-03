@@ -72,11 +72,11 @@ class Population:
             for i in range(0,len(self.members)):
                 self.members[i].calcCost(self.goal)
 
-            self.members.sort(key =lambda gene: gene.cost)
-
             for i in range(0,2):
                 print (self.members[i].code)
                 print ('Cost: ' + str(self.members[i].cost))
+
+            self.members.sort(key =lambda gene: gene.cost)
 
             child1 = self.members[0].mate_one(self.members[1])
             child2 = self.members[0].mate_two(self.members[1])
@@ -99,5 +99,5 @@ class Population:
 
 print('Welcome!')
 goal = input('Please enter a phrase:')
-population = Population(goal,100,10000)
+population = Population(goal,100,100000)
 population.generation()
