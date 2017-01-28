@@ -17,7 +17,7 @@ class Gene:
 
     def calcCost(self, compareTo):
         total = 0
-        for i in range(0,len(self.code)):
+        for i in range(0, len(self.code)):
             total += ((ord(self.code[i]) - ord(compareTo[i])) * (ord(self.code[i]) - ord(compareTo[i])))
         self.cost = total
 
@@ -47,8 +47,6 @@ class Gene:
                 mutation += str(s[i])
             self.code = mutation
 
-def sort_pop(self, member):
-    return member.cost
 
 class Population:
     def __init__(self, goal, size, generations):
@@ -62,35 +60,34 @@ class Population:
             self.members.append(gene)
             size -= 1
 
-
-
     def generation(self):
-        while(self.generationNumber < self.generations):
+
+        while self.generationNumber < self.generations:
             self.generationNumber += 1
             print('Generation: ' + str(self.generationNumber))
 
-            for i in range(0,len(self.members)):
+            for i in range(0, len(self.members)):
                 self.members[i].calcCost(self.goal)
 
-            for i in range(0,2):
-                print (self.members[i].code)
-                print ('Cost: ' + str(self.members[i].cost))
+            for i in range(0, 2):
+                print(self.members[i].code)
+                print('Cost: ' + str(self.members[i].cost))
 
-            self.members.sort(key =lambda gene: gene.cost)
+            self.members.sort(key=lambda gene: gene.cost)
 
             child1 = self.members[0].mate_one(self.members[1])
             child2 = self.members[0].mate_two(self.members[1])
 
-            for i in range(0,len(self.members),2):
+            for i in range(0, len(self.members), 2):
                 self.members[i] = child1
 
-            for i in range(1,len(self.members),2):
+            for i in range(1, len(self.members), 2):
                 self.members[i] = child2
 
             for i in range(0, len(self.members)):
                 self.members[i].mutate(.99)
                 self.members[i].calcCost(self.goal)
-                if (self.members[i].code == self.goal):
+                if self.members[i].code == self.goal:
                     print('Generation: ' + str(self.generationNumber))
                     print(self.members[i].code)
                     print('Cost: ' + str(self.members[i].cost))
@@ -99,5 +96,5 @@ class Population:
 
 print('Welcome!')
 goal = input('Please enter a phrase:')
-population = Population(goal,100,100000)
+population = Population(goal, 100, 100000)
 population.generation()
