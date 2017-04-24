@@ -1,2 +1,2 @@
 # Genetic-Algorithm-Practice
-Genetic Algorithm Projects I've completed.
+Two genetic algorithm projects I made as practice. The first one titled Project 1 was done by following a guide by Burak Kanber written in Javascript which I translated to Python. The second, Project 2, I designed myself. Project 1 takes a population of strings and mimics natural selection to transform them into input by the user. The second is similar but takes in a coordinate point from the user and mimics natural selection to recreate that coordinate.
